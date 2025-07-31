@@ -26,7 +26,7 @@ public class SafeDivisionExample {
                 double a = Double.parseDouble(input1);
                 double b = Double.parseDouble(input2);
                 safeDivide(a, b);
-                System.out.println(input1 + " ÷ " + input2 + (a/b));
+                System.out.println(input1 + " ÷ " + input2 + " = " +(a/b));
 
             } catch (NumberFormatException e) {
                 System.out.println("❌ 올바른 숫자를 입력해주세요.");
@@ -46,7 +46,7 @@ public class SafeDivisionExample {
 
         // 여기에 코드를 작성하세요
         if(divisor == 0){
-            throw new ArithmeticException("❌ 계산 오류: 0으로 나눌 수 없습니다");
+            throw new ArithmeticException("0으로 나눌 수 없습니다");
         }
         return 0; // 임시 반환값
     }
