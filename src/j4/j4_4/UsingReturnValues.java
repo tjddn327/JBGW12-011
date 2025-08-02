@@ -26,7 +26,7 @@ public class UsingReturnValues {
 
         // TODO 16: 반복문에서 사용하기
          System.out.print("카운트다운: ");
-         for (int i = countdown(5); i > 0; i = countdown(i)) {
+         for (int i = countdown(5)+1; i > 0; i = countdown(i)) {
              System.out.print(i + " ");
          }
          System.out.println("발사!");
@@ -44,6 +44,6 @@ public class UsingReturnValues {
 
     // TODO 19: 카운트다운 메서드 구현하기
     static int countdown(int n) {
-        return n;
+        return n-1;
     }
 }
