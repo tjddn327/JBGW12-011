@@ -9,20 +9,25 @@ public class EmployeeManagementSystem {
 
     public EmployeeManagementSystem() {
         // TODO 81: employees를 새 HashMap으로 초기화하기
-        employees = new HashMap<String, Employee>();
+        employees = new HashMap<>();
     }
 
     public void addEmployee(Employee employee) {
         // TODO 82: 직원 추가하기
         // employees Map에 employee.id를 키로 하여 추가
         // "직원 추가: [직원정보]" 출력
-        System.out.println("직원 추가: ");
+        employees.put(employee.id, employee);
+        System.out.println("직원 추가: " + employee);
     }
 
     public double calculateTotalMonthlySalary() {
         // TODO 83: 전체 월급 총액 계산하기
         // 모든 직원의 calculateMonthlySalary() 합계 반환
-        return 0;
+        double total = 0;
+        for (Employee e : employees.values()) {
+            total += e.calculateMonthlySalary();
+        }
+        return total;
     }
 
     public void displaySalaryReport() {
@@ -32,9 +37,9 @@ public class EmployeeManagementSystem {
         //   "[이름] ([직급]): [월급]원" 출력
         // "전체 월 급여 총액: [총액]원" 출력
         System.out.println("\n=== 급여 보고서 ===");
-        for (Map.Entry<String, Employee> entry : employees.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue() + "원");
+        for (Employee e : employees.values()) {
+            System.out.printf("%s (%s): %.1f원\n", e.name, e.getPosition(), e.calculateMonthlySalary());
         }
-        calculateTotalMonthlySalary();
+        System.out.println("전체 월 급여 총액: " + calculateTotalMonthlySalary() + "원");
     }
 }

@@ -21,10 +21,7 @@ class TextField extends Component {
     public void draw() {
         // TODO 53: value가 비어있으면 placeholder, 아니면 value 표시하기
         // "TextField [[display]] at ([x], [y])" 형식으로 출력
-        if(value != null) {
-            System.out.println("TextField " + value + " at (" + x + ", " + y + ")");
-        }else  {
-            System.out.println("TextField " + placeholder + " at (" + x + ", " + y + ")");
-        }
+        String display = (value.isEmpty()) ? placeholder : value;
+        System.out.println("TextField [" + display + "] at (" + x + ", " + y + ")");
     }
 }

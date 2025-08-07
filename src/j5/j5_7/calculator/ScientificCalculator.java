@@ -10,7 +10,7 @@ public class ScientificCalculator extends BasicCalculator {
         // Newton-Raphson 방법 구현 (또는 간단히 Math.sqrt 사용)
         // "개선된 알고리즘 사용" 출력 후 결과 반환
         if (number < 0) {
-            return Double.NaN;
+            throw new IllegalArgumentException("음수 안댄다고~~");
         }else{
             System.out.print("개선된 알고리즘 사용 √" + number + " = ");
             return Math.sqrt(number);

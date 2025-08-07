@@ -12,8 +12,8 @@ public class InheritanceConstructorExample {
         Circle c = new Circle(5);
 
         // TODO 45: 생성된 도형 정보 출력하기
-        System.out.println("=== Rectangle 생성 ===\n" + r.toString());
-        System.out.println("=== Rectangle 생성 (크기만) ===\n" + r1.toString());
-        System.out.println("=== Circle 생성 ===\n" + c.toString());
+        System.out.println("=== Rectangle 생성 ===\n" + r);
+        System.out.println("=== Rectangle 생성 (크기만) ===\n" + r1);
+        System.out.println("=== Circle 생성 ===\n" + c);
     }
 }

@@ -28,6 +28,7 @@ public class GUISystemExample {
         login.add(pw);
         login.add(lo);
         login.add(ca);
+
         ma.add(login);
 
         // TODO 56: 전체 화면 그리기
@@ -38,6 +39,7 @@ public class GUISystemExample {
         // loginBtn 클릭
         System.out.println("\n=== 아이디 입력 ===");
         id.setText("user123");
+
         System.out.println("\n=== 로그인 버튼 클릭 ===");
         lo.click();
     }

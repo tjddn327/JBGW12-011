@@ -16,33 +16,27 @@ public class SimpleDate {
         this.year = year;
         this.month = month;
         this.day = day;
-        System.out.println("날짜 생성: " + toString());
+        System.out.println("날짜 생성: " + this);
     }
 
     // 년, 월만 지정 (일은 1일로)
     public SimpleDate(int year, int month) {
         // TODO 31: this()를 사용하여 완전한 생성자 호출하기
         // day는 1로 설정
-        this.year = year;
-        this.month = month;
-        day = 1;
+        this(year, month, 1);
     }
 
     // 년만 지정 (1월 1일로)
     public SimpleDate(int year) {
         // TODO 32: this()를 사용하여 다른 생성자 호출하기
         // month는 1로 설정
-        this.year = year;
-        month = 1;
-        day = 1;
+        this(year, 1);
     }
 
     // 오늘 날짜로 생성
     public SimpleDate() {
         // TODO 33: this()를 사용하여 기본 날짜(2024, 1, 20) 설정하기
-        year = 2025;
-        month = 8;
-        day = 5;
+        this(2024, 1, 20);
     }
 
     @Override

@@ -13,6 +13,7 @@ public class InheritanceExample {
 
         // TODO 11: 각자 소개하기
         // 각 객체의 introduce() 메서드 호출
+        System.out.println("=== 각자 소개하기 ===");
         p.introduce();
         System.out.println();
         s.introduce();

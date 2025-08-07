@@ -13,15 +13,14 @@ class Rectangle extends Shape {
         super(color, filled);
         this.width = width;
         this.height = height;
+        System.out.println("Rectangle 생성자 호출");
     }
 
     // 크기와 색상만 지정
     public Rectangle(double width, double height, String color) {
         // TODO 38: this()를 사용하여 완전한 생성자 호출하기
         // filled는 false로 설정
-        super(color, false);
-        this.width = width;
-        this.height = height;
+        this(width, height, color, false);
     }
 
     // 크기만 지정

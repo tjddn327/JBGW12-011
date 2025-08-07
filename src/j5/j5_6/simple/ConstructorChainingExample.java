@@ -11,7 +11,7 @@ public class ConstructorChainingExample {
         SimpleDate s1 = new SimpleDate(2024,12,25);
         SimpleDate s2 = new SimpleDate(2024,3,1);
         SimpleDate s3 = new SimpleDate(2024,1,1);
-        SimpleDate s4 = new SimpleDate(2024,1,20);
+        SimpleDate s4 = new SimpleDate();
 
 
         // TODO 36: 생성된 날짜들 출력하기

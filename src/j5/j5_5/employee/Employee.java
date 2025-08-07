@@ -38,6 +38,7 @@ public abstract class Employee {
     public String toString() {
         // TODO 72: 직원 정보 문자열 반환하기
         // "[이름] ([ID]) - [직급], [부서]부서, 연차: [근속년수]년"
-        return name + "(" + id + ") - " + department + getPosition() + "부서" + ", 연차:" + hireDate + "년";
+        return String.format("%s (%s) - %s, %s부서, 연차: %d년",
+                name, id, getPosition(), department, getYearsOfService());
     }
 }

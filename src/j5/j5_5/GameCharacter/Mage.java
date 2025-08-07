@@ -25,7 +25,7 @@ public class Mage extends GameCharacter {
         //   "[이름]의 마나가 부족합니다! 기본 공격을 합니다." 출력
         //   target.takeDamage(attackPower) 호출
         if(mana>=10){
-            System.out.println(name + "이(가) " + target + "에게 파이어볼을 시전합니다!");
+            System.out.println(name + "이(가) " + target.name + "에게 파이어볼을 시전합니다!");
             target.takeDamage(attackPower + 10);
             mana -= 10;
         }else{

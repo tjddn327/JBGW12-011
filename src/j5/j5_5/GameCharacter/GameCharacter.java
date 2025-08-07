@@ -32,14 +32,10 @@ public abstract class GameCharacter {
         // health에서 damage 차감 (0 미만이면 0으로)
         // "[이름]이(가) [피해]의 피해를 입었습니다! (남은 체력: [체력])" 출력
         // health가 0이면 "[이름]이(가) 쓰러졌습니다!" 추가 출력
-        if(damage < 0){
-            damage = 0;
-            System.out.println(name + "이(가) " + damage + "의 피해를 입었습니다! (남은 체력: " + health + ")");
-            return;
-        }
         health -= damage;
+        if (health < 0) health = 0;
         System.out.println(name + "이(가) " + damage + "의 피해를 입었습니다! (남은 체력: " + health + ")");
-        if(health == 0){
+        if (health == 0) {
             System.out.println(name + "이(가) 쓰러졌습니다!");
         }
     }
@@ -48,28 +44,20 @@ public abstract class GameCharacter {
         // TODO 54: 체력 회복 구현하기
         // health에 amount 추가 (maxHealth 초과 시 maxHealth로)
         // "[이름]이(가) [회복량]의 체력을 회복했습니다! (현재 체력: [체력])" 출력
-        if((health+=amount) > maxHealth){
-            health = maxHealth;
-        }else{
-            health += amount;
-        }
+        health += amount;
+        if (health > maxHealth) health = maxHealth;
         System.out.println(name + "이(가) " + amount + "의 체력을 회복했습니다! (현재 체력: " + health + ")");
-
     }
 
     public boolean isAlive() {
         // TODO 55: 생존 여부 반환하기
-        if(health <= 0){
-            return false;
-        }else{
-            return true;
-        }
+        return health > 0;
     }
 
     @Override
     public String toString() {
         // TODO 56: 캐릭터 정보 문자열 반환하기
         // "[이름] (Lv.[레벨] [직업]) - HP: [현재체력]/[최대체력], 공격력: [공격력]"
-        return name + "(Lv." + level + getClassName() + ") - HP: " + health + "/" + maxHealth + ", 공격력: ";
+        return name + "(Lv." + level + getClassName() + ") - HP: " + health + "/" + maxHealth + ", 공격력: " + attackPower;
     }
 }

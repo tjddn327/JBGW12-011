@@ -59,6 +59,7 @@ public class Dog implements LandAnimal {
         // TODO 55: "[name]가 달립니다!" 출력하고
         // move(100) 호출하기
         System.out.println(name + "가 달립니다!");
+        move(100);
     }
 
     @Override

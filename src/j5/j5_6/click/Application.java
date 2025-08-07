@@ -14,7 +14,8 @@ class Application implements ClickListener {
 
         // TODO 16: 리스너 등록하기
         // this를 리스너로 등록
-
+        saveButton.setClickListener(this);
+        cancelButton.setClickListener(this);
     }
 
     @Override
@@ -22,6 +23,11 @@ class Application implements ClickListener {
         // TODO 17: source가 어떤 버튼인지 확인하고 처리하기
         // saveButton: "저장 작업을 수행합니다." 출력
         // cancelButton: "작업을 취소합니다." 출력
+        if (source == saveButton) {
+            System.out.println("저장 작업을 수행합니다.");
+        } else if (source == cancelButton) {
+            System.out.println("작업을 취소합니다.");
+        }
     }
 
     public void run() {

@@ -8,7 +8,7 @@ public class StringReader implements Readable {
     public StringReader(String content) {
         // TODO 33: content와 position 초기화하기
         this.content = content;
-        position = 0;
+        this.position = 0;
     }
 
     @Override
@@ -18,8 +18,8 @@ public class StringReader implements Readable {
         // 아니면 content.charAt(position) 반환하고 position 증가
         if(position >= content.length()) {
             return '\0';
-        }else{
-            return content.charAt(position++);
         }
+        return content.charAt(position++);
+
     }
 }

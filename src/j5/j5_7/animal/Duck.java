@@ -13,7 +13,7 @@ public class Duck implements LandAnimal, AquaticAnimal, FlyingAnimal {
     public Duck(String name) {
         // TODO 57: name과 currentSpeed(landSpeed) 초기화하기
         this.name = name;
-        currentSpeed = 0;
+        this.currentSpeed = landSpeed;
     }
 
     @Override
@@ -91,6 +91,7 @@ public class Duck implements LandAnimal, AquaticAnimal, FlyingAnimal {
         // TODO 69: currentSpeed를 flySpeed로 설정하고
         // altitude를 100으로 설정하고
         // "[name]가 날아오릅니다!" 출력하기
+        currentSpeed = flySpeed;
         altitude = 100;
         System.out.println(name + "가 날아오릅니다!");
     }

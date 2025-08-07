@@ -15,8 +15,7 @@ class Circle extends Shape {
     public Circle(double radius) {
         // TODO 42: this()를 사용하여 완전한 생성자 호출하기
         // 기본값: "빨강", true
-        super("빨강", true);
-        this.radius = radius;
+        this(radius, "빨강", true);
 
     }
 

@@ -13,7 +13,8 @@ public class Button implements EventEmitter {
     public Button(String text) {
         // TODO 78: text 초기화하고
         // listeners를 새 HashMap으로 초기화하기
-        listeners = new HashMap<>();
+        this.text = text;
+        this.listeners = new HashMap<>();
     }
 
     @Override
@@ -26,8 +27,9 @@ public class Button implements EventEmitter {
     public void removeEventListener(String eventType, EventListener listener) {
         // TODO 80: 이벤트 리스너 제거하기
         // listeners.get(eventType)에서 listener 제거
-        if(listeners.containsKey(eventType)) {
-            listeners.get(eventType).remove(listener);
+        List<EventListener> list = listeners.get(eventType);
+        if(list != null){
+            list.remove(listener);
         }
     }
 
@@ -36,8 +38,12 @@ public class Button implements EventEmitter {
         // TODO 81: 이벤트 발생시키기
         // event.getType()에 해당하는 리스너들을 찾아서
         // 각각의 onEvent(event) 호출하기
-
-
+        List<EventListener> list = listeners.get(event.getType());
+        if (list != null) {
+            for (EventListener listener : list) {
+                listener.onEvent(event);
+            }
+        }
     }
 
     // 버튼 클릭 시뮬레이션
@@ -46,6 +52,9 @@ public class Button implements EventEmitter {
         // Event 생성 (type: "click", source: this)
         // event에 "button" 데이터로 text 추가
         // emit(event) 호출
+        Event event = new Event("click", this);
+        event.setData("button", text);
+        emit(event);
     }
 
     public String getText() {

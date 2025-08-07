@@ -48,12 +48,17 @@ public class Player implements GameCharacter {
         // TODO 21: 공격 구현하기
         // "[name]이(가) 공격!" 출력
         System.out.println(name + "이(가) 공격!");
+        if (target instanceof Player) {
+            Player p = (Player) target;
+            p.health -= 10;
+            if (p.health < 0) p.health = 0;
+        }
     }
 
     @Override
     public int getHealth() {
         // TODO 22: health 반환하기
-        return 0;
+        return health;
     }
 
     @Override

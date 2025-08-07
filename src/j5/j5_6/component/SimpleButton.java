@@ -11,8 +11,7 @@ class SimpleButton extends Component {
 
     public SimpleButton(int x, int y, String text) {
         // TODO 49: this()를 사용하여 기본 크기(100, 30) 설정하기
-        super(x, y, 100, 30);
-        this.text = text;
+        this(x,y,100,30,text);
     }
 
     @Override

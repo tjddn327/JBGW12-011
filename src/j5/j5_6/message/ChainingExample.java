@@ -12,12 +12,12 @@ public class ChainingExample {
         mb.appendLine("안녕하세요 여러분!");
         mb.append("오늘은");
         mb.appendWithSpace("좋은 날씨입니다.");
-        mb.toString();
+        System.out.println(mb);
 
         // TODO 13: 리셋 후 다시 사용하기
         // "메서드 체이닝은 편리합니다!"
         mb.reset();
         mb.append("메서드 체이닝은 편리합니다.");
-        mb.toString();
+        System.out.println(mb);
     }
 }

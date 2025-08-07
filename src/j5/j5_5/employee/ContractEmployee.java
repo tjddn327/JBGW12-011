@@ -10,7 +10,7 @@ public class ContractEmployee extends Employee {
         // hourlyRate 초기화, hoursWorked = 0
         super(id, name, department);
         this.hourlyRate = hourlyRate;
-        hoursWorked = 0;
+        this.hoursWorked = 0;
     }
 
     @Override

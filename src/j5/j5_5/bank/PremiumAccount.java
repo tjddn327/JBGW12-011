@@ -28,7 +28,7 @@ public class PremiumAccount extends BankAccount {
         balance -=  amount;
         addTransaction("출금: " + amount + "원 (잔액: " + balance + "원)");
         if (balance < 0){
-            System.out.println("신용 한도 사용 중: " + (-balance) + "원");
+            addTransaction("신용 한도 사용 중: " + (-balance) + "원");
             return;
         }
         if (amount > creditLimit + balance) {

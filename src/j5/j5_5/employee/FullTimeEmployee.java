@@ -10,7 +10,7 @@ public class FullTimeEmployee extends Employee {
         // baseSalary 초기화, bonus = 0
         super(id, name, department);
         this.baseSalary = baseSalary;
-        bonus = 0;
+        this.bonus = 0;
     }
 
     @Override

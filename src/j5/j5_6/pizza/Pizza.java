@@ -65,7 +65,14 @@ public class Pizza {
     public String toString() {
         // TODO 63: 피자 정보를 문자열로 반환하기
         // "[size] 피자" + 선택된 토핑들
-        // 예: "Large 피자 + 치즈 + 페퍼로니"
-        return size + " 피자 " + cheese + pepperoni + mushrooms + onions;
+        // 예: "Large 피자 + 치즈 + 페퍼로니"\
+        StringBuilder sb = new StringBuilder(size + " 피자");
+
+        if(cheese) sb.append(" + 치즈");
+        if(pepperoni) sb.append(" + 페퍼로니");
+        if(mushrooms) sb.append(" + 버섯");
+        if(onions) sb.append(" + 양파");
+
+        return sb.toString();
     }
 }

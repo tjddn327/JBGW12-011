@@ -7,17 +7,19 @@ public class ReadableTest {
         // "Hello World\nJava Programming" 문자열로 생성
         // readLine()으로 첫 줄 읽고 출력
         // readWord()로 다음 단어 읽고 출력
-        StringReader sr = new StringReader("Hello World\nJava Programming");
-        sr.readLine();
-        System.out.println("첫 줄: " + sr.readLine());
-        sr.readWord();
-        System.out.println("단어: " + sr.readWord());
+        Readable sr = new StringReader("Hello World\nJava Programming");
+
+        String ss = sr.readLine();
+        System.out.println("첫 줄: " + ss);
+        String sss = sr.readWord();
+        System.out.println("단어: " + sss);
 
 
         // TODO 37: StarPattern 테스트하기
         // StarPattern 객체 생성
         // readAll()로 전체 패턴 읽고 출력
-        StarPattern sp = new StarPattern();
-        sp.readAll();
+        Readable sp = new StarPattern();
+        System.out.println("\n=== 별 패턴 ===");
+        System.out.print(sp.readAll());
     }
 }

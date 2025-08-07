@@ -48,5 +48,12 @@ public class Zoo {
         // Dog이면 wagTail(), Eagle이면 hunt() 호출
         // instanceof 사용
         System.out.println("\n=== 특별한 행동들 ===");
+        for(Animal a : animals){
+            if(a instanceof Dog){
+                ((Dog) a).wagTail();
+            }else if (a instanceof  Eagle){
+                ((Eagle) a).hunt();
+            }
+        }
     }
 }

@@ -21,6 +21,7 @@ public class GameTest {
         // 마법사는 DOWN, LEFT로 이동
         p1.move(GameConstants.DIRECTION_UP);
         p1.move(GameConstants.DIRECTION_RIGHT);
+
         p2.move(GameConstants.DIRECTION_DOWN);
         p2.move(GameConstants.DIRECTION_LEFT);
 

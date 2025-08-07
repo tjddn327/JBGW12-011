@@ -12,8 +12,8 @@ public class BattleTest {
         // TODO 67: 캐릭터 정보 출력하기
         // 두 캐릭터의 toString() 결과 출력
         System.out.println("=== 초기 상태 ===");
-        w.toString();
-        m.toString();
+        System.out.println(w);
+        System.out.println(m);
 
         // TODO 68: 전투 시뮬레이션하기
         // 전사가 마법사를 공격
@@ -33,6 +33,8 @@ public class BattleTest {
         // TODO 69: 최종 상태 출력하기
         // 두 캐릭터의 생존 여부와 현재 정보 출력
         System.out.println("\n=== 최종 상태 ===");
+        System.out.println(w.name + ": " + (w.isAlive() ? "생존" : "사망") + " - " + w);
+        System.out.println(m.name + ": " + (m.isAlive() ? "생존" : "사망") + " - " + m);
 
     }
 }

@@ -17,8 +17,9 @@ public class StarPattern implements Readable {
         if(currentLine >= maxLines){
             return '\0';
         }
+
         if(currentPos <= currentLine){
-            currentLine++;
+            currentPos++;
             return '*';
         }else{
             currentPos = 0;
