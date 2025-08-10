@@ -2,14 +2,11 @@ package j9.j9_2;
 
 public class RecursiveClassExample {
 
-    /**
-     * 직원 클래스 - 감독자 관계를 표현
-     */
+    /** * 직원 클래스 - 감독자 관계를 표현     */
     static class Employee {
         String name;
         String position;
         Employee supervisor;
-        public static int count = 0;
 
         public Employee(String name, String position) {
             this.name = name;
@@ -20,10 +17,10 @@ public class RecursiveClassExample {
         public void printHierarchy() {
             // TODO: 현재 직원부터 사장까지의 조직 체계를 출력
             // 힌트: while 루프를 사용하여 supervisor가 null이 될 때까지 이동
-            while(supervisor != null) {
-                System.out.println(supervisor.position + ": " + supervisor.name);
-                supervisor = supervisor.supervisor;
-                count++;
+            Employee current = this;
+            while (current != null) {
+                System.out.println(current.position + ": " + current.name);
+                current = current.supervisor;
             }
         }
 
@@ -32,9 +29,11 @@ public class RecursiveClassExample {
             // TODO: 재귀를 사용하여 사장까지의 거리 계산
             // 힌트: supervisor가 null이면 본인이 사장 (거리 0)
             //      아니면 1 + supervisor의 거리
-            if(supervisor == null) return 0;
-            printHierarchy();
-            return count;
+
+            if (supervisor == null) {
+                return 0; // 기저 사례: 본인이 사장
+            }
+            return 1 + supervisor.getDistanceToPresident(); // 재귀 사례
         }
     }
 
@@ -54,15 +53,9 @@ public class RecursiveClassExample {
         president.supervisor = null;
 
         // 실행 결과:
-        // === 정사원의 조직 체계 ===
-        // 사원: 정사원
-        // 부장: 최부장
-        // 이사: 박이사
-        // 부사장: 이부사
-        // 대표이사: 김대표
-        //
-        // 사장까지의 거리: 4
         System.out.println("=== 정사원의 조직 체계 ===");
-        System.out.println(employee.getDistanceToPresident());
+        employee.printHierarchy();
+
+        System.out.println("\n사장까지의 거리: " + employee.getDistanceToPresident());
     }
 }

@@ -5,6 +5,14 @@ import java.util.List;
 
 public class TreePathProblems {
 
+    // TreeNode 클래스는 예제 1-1에 정의되어 있다고 가정합니다.
+    public static class TreeNode {
+        int data;
+        TreeNode left;
+        TreeNode right;
+        public TreeNode(int data) { this.data = data; }
+    }
+
     // 루트에서 잎까지의 모든 경로 반환
     public static List<String> binaryTreePaths(TreeNode root) {
         List<String> paths = new ArrayList<>();
@@ -31,13 +39,19 @@ public class TreePathProblems {
     // 경로 합계가 특정 값인지 확인
     public static boolean hasPathSum(TreeNode root, int targetSum) {
         // TODO 1: 기저 사례 - root가 null이면 false 반환
+        if (root == null) {
+            return false;
+        }
 
         // TODO 2: 잎 노드인 경우, 노드의 값이 targetSum과 같은지 확인
+        if (root.left == null && root.right == null) {
+            return root.data == targetSum;
+        }
 
         // TODO 3: 왼쪽 또는 오른쪽 서브트리에서
         //         (targetSum - 현재 노드 값)을 만족하는 경로가 있는지 확인
-
-        return false; // 임시 반환값
+        int newTargetSum = targetSum - root.data;
+        return hasPathSum(root.left, newTargetSum) || hasPathSum(root.right, newTargetSum);
     }
 
     // 모든 경로의 합계 중 최대값
@@ -61,12 +75,20 @@ public class TreePathProblems {
     // 가장 낮은 공통 조상(LCA) 찾기
     public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         // TODO 1: 기저 사례 - root가 null이거나 p 또는 q와 같으면 root 반환
+        if (root == null || root == p || root == q) {
+            return root;
+        }
 
         // TODO 2: 왼쪽과 오른쪽 서브트리에서 재귀적으로 LCA 찾기
+        TreeNode leftLCA = lowestCommonAncestor(root.left, p, q);
+        TreeNode rightLCA = lowestCommonAncestor(root.right, p, q);
 
         // TODO 3: 왼쪽과 오른쪽 모두에서 null이 아닌 값이 반환되면 현재 노드가 LCA
-        // TODO 4: 한쪽만 null이 아니면 그 쪽의 값 반환
+        if (leftLCA != null && rightLCA != null) {
+            return root;
+        }
 
-        return null; // 임시 반환값
+        // TODO 4: 한쪽만 null이 아니면 그 쪽의 값 반환
+        return (leftLCA != null) ? leftLCA : rightLCA;
     }
 }

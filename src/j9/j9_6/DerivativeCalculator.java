@@ -1,4 +1,4 @@
-//package j9.j9_6;
+//package j9.j9_6; 포기
 //
 //public class DerivativeCalculator {
 //
@@ -6,7 +6,7 @@
 //    abstract static class ExpNode {
 //        abstract double value(double xValue);
 //        abstract ExpNode derivative();
-//        abstract String toString();
+//        public abstract String toString();
 //
 //        // 단순화 메서드
 //        ExpNode simplify() {
@@ -75,14 +75,32 @@
 //
 //        ExpNode derivative() {
 //            // TODO 27: 왼쪽과 오른쪽 자식의 도함수 계산
+//            ExpNode leftDeriv = left.derivative();
+//            ExpNode rightDeriv = right.derivative();
 //
 //            // TODO 28: 연산자에 따라 도함수 규칙 적용
-//            // - 덧셈: (A + B)' = A' + B'
-//            // - 뺄셈: (A - B)' = A' - B'
-//            // - 곱셈: (A * B)' = A' * B + A * B'
-//            // - 나눗셈: (A / B)' = (A' * B - A * B') / (B * B)
-//
-//            return null; // 임시 반환값
+//            switch (op) {
+//                case '+':
+//                    // (A + B)' = A' + B'
+//                    return new BinOpNode('+', leftDeriv, rightDeriv);
+//                case '-':
+//                    // (A - B)' = A' - B'
+//                    return new BinOpNode('-', leftDeriv, rightDeriv);
+//                case '*':
+//                    // (A * B)' = A' * B + A * B'
+//                    return new BinOpNode('+',
+//                            new BinOpNode('*', leftDeriv, right),
+//                            new BinOpNode('*', left, rightDeriv));
+//                case '/':
+//                    // (A / B)' = (A' * B - A * B') / (B * B)
+//                    return new BinOpNode('/',
+//                            new BinOpNode('-',
+//                                    new BinOpNode('*', leftDeriv, right),
+//                                    new BinOpNode('*', left, rightDeriv)),
+//                            new BinOpNode('*', right, right));
+//                default:
+//                    throw new IllegalStateException("Unknown operator: " + op);
+//            }
 //        }
 //
 //        @Override

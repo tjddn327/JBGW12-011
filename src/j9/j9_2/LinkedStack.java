@@ -1,5 +1,7 @@
 package j9.j9_2;
 
+import java.util.EmptyStackException;
+
 public class LinkedStack<T> {
 
     private Node<T> top;
@@ -15,20 +17,31 @@ public class LinkedStack<T> {
     }
 
     public void push(T data) {
-        // TODO: 스택의 맨 위에 요소 추가
+        // TODO: 스택의 맨 위에 요소 추가 (리스트의 맨 앞에 추가)
+        Node<T> newNode = new Node<>(data);
+        newNode.next = top;
+        top = newNode;
+        size++;
     }
 
     public T pop() {
         // TODO: 스택의 맨 위 요소 제거 및 반환
         // 힌트: 빈 스택 처리
-
-        return null; // 임시 반환값
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        T data = top.data;
+        top = top.next;
+        size--;
+        return data;
     }
 
     public T peek() {
         // TODO: 스택의 맨 위 요소 확인 (제거하지 않음)
-
-        return null; // 임시 반환값
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        return top.data;
     }
 
     public boolean isEmpty() {
@@ -42,13 +55,16 @@ public class LinkedStack<T> {
     public static void main(String[] args) {
         LinkedStack<String> stack = new LinkedStack<>();
 
-        // 실행 결과:
-        // push: 첫번째, 두번째, 세번째
-        // 스택 크기: 3
-        // peek: 세번째
-        // pop: 세번째
-        // pop: 두번째
-        // pop: 첫번째
-        // 빈 스택? true
+        System.out.println("push: 첫번째, 두번째, 세번째");
+        stack.push("첫번째");
+        stack.push("두번째");
+        stack.push("세번째");
+
+        System.out.println("스택 크기: " + stack.size());
+        System.out.println("peek: " + stack.peek());
+        System.out.println("pop: " + stack.pop());
+        System.out.println("pop: " + stack.pop());
+        System.out.println("pop: " + stack.pop());
+        System.out.println("빈 스택? " + stack.isEmpty());
     }
 }

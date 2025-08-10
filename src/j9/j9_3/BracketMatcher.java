@@ -2,6 +2,7 @@ package j9.j9_3;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.EmptyStackException;
 
 public class BracketMatcher {
 
@@ -13,26 +14,36 @@ public class BracketMatcher {
         BRACKET_PAIRS.put(']', '[');
     }
 
-    /**
-     * 주어진 표현식의 괄호가 올바르게 매칭되는지 검사
-     */
+    /** * 주어진 표현식의 괄호가 올바르게 매칭되는지 검사     */
     public static boolean isBalanced(String expression) {
         GenericLinkedStack<Character> stack = new GenericLinkedStack<>();
 
         // TODO 1: expression의 각 문자를 순회
-        // TODO 2: 여는 괄호이면 스택에 push
-        // TODO 3: 닫는 괄호이면:
-        //   - 스택이 비었으면 false 반환
-        //   - 스택에서 pop한 후 매칭이 맞는지 확인
-        //   - 매칭이 안 맞으면 false 반환
-        // TODO 4: 모든 문자 처리 후 스택이 비어있는지 확인
+        for (char ch : expression.toCharArray()) {
+            // TODO 2: 여는 괄호이면 스택에 push
+            if (isOpenBracket(ch)) {
+                stack.push(ch);
+            }
+            // TODO 3: 닫는 괄호이면:
+            else if (isCloseBracket(ch)) {
+                //   - 스택이 비었으면 false 반환
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                //   - 스택에서 pop한 후 매칭이 맞는지 확인
+                char openBracket = stack.pop();
+                //   - 매칭이 안 맞으면 false 반환
+                if (!isMatchingPair(openBracket, ch)) {
+                    return false;
+                }
+            }
+        }
 
-        return false; // 임시 반환값
+        // TODO 4: 모든 문자 처리 후 스택이 비어있는지 확인
+        return stack.isEmpty();
     }
 
-    /**
-     * 자세한 검사 결과를 반환하는 메서드
-     */
+    /** * 자세한 검사 결과를 반환하는 메서드     */
     public static ValidationResult validateBrackets(String expression) {
         GenericLinkedStack<BracketInfo> stack = new GenericLinkedStack<>();
 
@@ -67,18 +78,18 @@ public class BracketMatcher {
 
     private static boolean isOpenBracket(char ch) {
         // TODO: ch가 여는 괄호 '(', '{', '[' 중 하나인지 확인
-        return false; // 임시 반환값
+        return ch == '(' || ch == '{' || ch == '[';
     }
 
     private static boolean isCloseBracket(char ch) {
         // TODO: ch가 닫는 괄호 ')', '}', ']' 중 하나인지 확인
-        return false; // 임시 반환값
+        return ch == ')' || ch == '}' || ch == ']';
     }
 
     private static boolean isMatchingPair(char open, char close) {
         // TODO: BRACKET_PAIRS 맵을 사용하여 open과 close가 매칭되는 쌍인지 확인
         // 힌트: BRACKET_PAIRS.get(close)가 open과 같은지 확인
-        return false; // 임시 반환값
+        return BRACKET_PAIRS.containsKey(close) && BRACKET_PAIRS.get(close) == open;
     }
 
     // 괄호 정보를 저장하는 내부 클래스

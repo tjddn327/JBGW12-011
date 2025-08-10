@@ -1,5 +1,7 @@
 package j9.j9_3;
 
+import java.util.NoSuchElementException;
+
 public class CircularArrayQueue<T> {
 
     private T[] items;
@@ -18,11 +20,9 @@ public class CircularArrayQueue<T> {
         size = 0;
     }
 
-    /**
-     * 큐에 요소 추가
-     */
+    /** * 큐에 요소 추가     */
     public void enqueue(T item) {
-        if (size == items.length) {
+        if (isFull()) {
             throw new IllegalStateException("큐가 가득 찼습니다");
         }
 
@@ -31,17 +31,15 @@ public class CircularArrayQueue<T> {
         size++;
     }
 
-    /**
-     * 큐에서 요소 제거 및 반환
-     */
+    /** * 큐에서 요소 제거 및 반환     */
     public T dequeue() {
         // TODO 1: 큐가 비어있는지 확인하고 예외 처리
-        if(items.length == 0){
-            throw new IllegalStateException("큐가 비어있습니다.");
+        if (isEmpty()) {
+            throw new NoSuchElementException("큐가 비어있습니다");
         }
 
         // TODO 2: front 위치의 요소를 임시 변수에 저장
-        T imsi = items[front];
+        T item = items[front];
 
         // TODO 3: front 위치를 null로 설정 (가비지 컬렉션을 위해)
         items[front] = null;
@@ -52,57 +50,45 @@ public class CircularArrayQueue<T> {
 
         // TODO 5: size 감소
         size--;
-        // TODO 6: 저장한 요소 반환
 
-        return imsi; // 임시 반환값
+        // TODO 6: 저장한 요소 반환
+        return item;
     }
 
-    /**
-     * 큐의 앞쪽 요소 확인
-     */
+    /** * 큐의 앞쪽 요소 확인     */
     public T peek() {
         // TODO 1: 큐가 비어있는지 확인하고 예외 처리
-        if(items.length == 0){
-            throw new IllegalStateException("큐가 비어있습니다.");
+        if (isEmpty()) {
+            throw new NoSuchElementException("큐가 비어있습니다");
         }
-        // TODO 2: front 위치의 요소 반환
 
-        return items[front]; // 임시 반환값
+        // TODO 2: front 위치의 요소 반환
+        return items[front];
     }
 
-    /**
-     * 큐가 비어있는지 확인
-     */
+    /** * 큐가 비어있는지 확인     */
     public boolean isEmpty() {
         // TODO: size가 0인지 확인
-        return size == 0; // 임시 반환값
+        return size == 0;
     }
 
-    /**
-     * 큐가 가득 찼는지 확인
-     */
+    /** * 큐가 가득 찼는지 확인     */
     public boolean isFull() {
         // TODO: size가 배열의 길이와 같은지 확인
-        return size == items.length; // 임시 반환값
+        return size == items.length;
     }
 
-    /**
-     * 큐의 크기 반환
-     */
+    /** * 큐의 크기 반환     */
     public int size() {
         return size;
     }
 
-    /**
-     * 큐의 용량 반환
-     */
+    /** * 큐의 용량 반환     */
     public int capacity() {
         return items.length;
     }
 
-    /**
-     * 큐의 상태를 시각적으로 표시
-     */
+    /** * 큐의 상태를 시각적으로 표시     */
     public void displayStatus() {
         System.out.println("\n=== 큐 상태 ===");
         System.out.print("배열: [");
@@ -114,11 +100,11 @@ public class CircularArrayQueue<T> {
                 System.out.print("_");
             }
 
-            if (i == front && i == rear) {
+            if (size > 0 && i == front && i == rear) {
                 System.out.print("(F,R)");
-            } else if (i == front) {
+            } else if (size > 0 && i == front) {
                 System.out.print("(F)");
-            } else if (i == rear) {
+            } else if (size > 0 && i == rear) {
                 System.out.print("(R)");
             }
 

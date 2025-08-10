@@ -17,8 +17,17 @@ public class ListReversal {
     public static Node reverseIterative(Node head) {
         // TODO: 반복문을 사용하여 리스트 뒤집기
         // 힌트: previous, current, next 포인터 사용
+        Node previous = null;
+        Node current = head;
+        Node next = null;
 
-        return null; // 임시 반환값
+        while (current != null) {
+            next = current.next;    // 다음 노드를 임시 저장
+            current.next = previous; // 현재 노드의 다음을 이전 노드로 변경
+            previous = current;     // previous를 현재 노드로 이동
+            current = next;         // current를 다음 노드로 이동
+        }
+        return previous; // 새로운 head는 이전의 마지막 노드였던 previous
     }
 
     /**
@@ -26,11 +35,23 @@ public class ListReversal {
      */
     public static Node reverseRecursive(Node head) {
         // TODO: 재귀를 사용하여 리스트 뒤집기
-        // 힌트:
-        // 1. 기저 사례: 빈 리스트나 단일 노드
-        // 2. 재귀 사례: 나머지를 뒤집고 현재 노드를 끝에 추가
 
-        return null; // 임시 반환값
+        // 1. 기저 사례: 빈 리스트이거나 노드가 하나뿐인 경우
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        // 2. 재귀 사례: 나머지 리스트(head.next부터)를 뒤집는다.
+        Node newHead = reverseRecursive(head.next);
+
+        // head.next는 뒤집힌 리스트의 마지막 노드가 됨.
+        // 그 노드의 next를 현재 head로 설정한다.
+        head.next.next = head;
+
+        // 원래의 연결(head -> head.next)을 끊어 순환을 방지한다.
+        head.next = null;
+
+        return newHead;
     }
 
     // 유틸리티 메서드
@@ -49,15 +70,25 @@ public class ListReversal {
     }
 
     public static void main(String[] args) {
-        // 리스트 생성: A → B → C → D
-        Node head = new Node("A");
-        head.next = new Node("B");
-        head.next.next = new Node("C");
-        head.next.next.next = new Node("D");
+        // 리스트1 생성
+        Node head1 = new Node("A");
+        head1.next = new Node("B");
+        head1.next.next = new Node("C");
+        head1.next.next.next = new Node("D");
 
-        // 실행 결과:
-        // 원본: A → B → C → D
-        // 반복 뒤집기: D → C → B → A
-        // 재귀 뒤집기: D → C → B → A
+        // 리스트2 생성 (재귀 테스트용)
+        Node head2 = new Node("A");
+        head2.next = new Node("B");
+        head2.next.next = new Node("C");
+        head2.next.next.next = new Node("D");
+
+        printList("원본", head1);
+
+        Node reversedHead1 = reverseIterative(head1);
+        printList("반복 뒤집기", reversedHead1);
+
+        // 재귀 테스트를 위해 다시 원래 리스트로 뒤집기
+        Node reversedHead2 = reverseRecursive(head2);
+        printList("재귀 뒤집기", reversedHead2);
     }
 }

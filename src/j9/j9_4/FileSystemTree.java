@@ -26,6 +26,7 @@ public class FileSystemTree {
     }
 
     private static FileNode buildFileTreeHelper(File file) {
+        if (!file.exists()) return null;
         FileNode node = new FileNode(file.getName(), file.isDirectory());
 
         if (file.isDirectory()) {
@@ -44,26 +45,27 @@ public class FileSystemTree {
 
     // 트리 형태로 출력
     public static void printFileTree(FileNode node, String indent) {
-        System.out.println(indent + (node.isDirectory ? "[D] " : "[F] ") +
+        if (node == null) return;
+        System.out.println(indent + (node.isDirectory ? "└── [D] " : "└── [F] ") +
                 node.name + (node.isDirectory ? "" : " (" + node.size + " bytes)"));
 
         for (int i = 0; i < node.children.size(); i++) {
-            boolean isLast = (i == node.children.size() - 1);
-            printFileTree(node.children.get(i),
-                    indent + (isLast ? "    " : "│   "));
+            printFileTree(node.children.get(i), indent + "    ");
         }
     }
 
     // 특정 확장자의 파일 찾기
     public static List<String> findFilesByExtension(FileNode root, String extension) {
         List<String> result = new ArrayList<>();
-        findFilesByExtensionHelper(root, extension, "", result);
+        if (root != null) {
+            findFilesByExtensionHelper(root, extension, "", result);
+        }
         return result;
     }
 
     private static void findFilesByExtensionHelper(FileNode node, String extension,
                                                    String path, List<String> result) {
-        String currentPath = path.isEmpty() ? node.name : path + "/" + node.name;
+        String currentPath = path.isEmpty() ? node.name : path + File.separator + node.name;
 
         if (!node.isDirectory && node.name.endsWith(extension)) {
             result.add(currentPath);
@@ -76,6 +78,7 @@ public class FileSystemTree {
 
     // 디렉토리 크기 계산
     public static long calculateSize(FileNode node) {
+        if (node == null) return 0;
         if (!node.isDirectory) {
             return node.size;
         }

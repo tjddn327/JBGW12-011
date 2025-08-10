@@ -40,17 +40,13 @@ public class TaskScheduler {
         this.isRunning = false;
     }
 
-    /**
-     * 작업 추가
-     */
+    /** * 작업 추가     */
     public void addTask(Task task) {
         taskQueue.enqueue(task);
         System.out.println("작업 추가됨: " + task);
     }
 
-    /**
-     * 모든 작업 실행
-     */
+    /** * 모든 작업 실행     */
     public void executeAll() {
         isRunning = true;
         System.out.println("\n=== 작업 실행 시작 ===");
@@ -67,23 +63,17 @@ public class TaskScheduler {
         System.out.println("총 실행 시간: " + (endTime - startTime) + "ms");
     }
 
-    /**
-     * 실행 중지
-     */
+    /** * 실행 중지     */
     public void stop() {
         isRunning = false;
     }
 
-    /**
-     * 대기 중인 작업 수
-     */
+    /** * 대기 중인 작업 수     */
     public int getPendingTaskCount() {
         return taskQueue.size();
     }
 
-    /**
-     * 우선순위 큐 (간단한 구현)
-     */
+    /** * 우선순위 큐 (간단한 구현)     */
     static class PriorityTaskScheduler {
         private LinkedQueue<Task>[] queues;
         private int maxPriority;

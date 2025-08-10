@@ -16,8 +16,13 @@ public class IntegerListOperations {
      */
     public static int sum(IntNode head) {
         // TODO: 리스트의 모든 값을 합산
-
-        return 0; // 임시 반환값
+        int total = 0;
+        IntNode current = head;
+        while (current != null) {
+            total += current.value;
+            current = current.next;
+        }
+        return total;
     }
 
     /**
@@ -26,8 +31,19 @@ public class IntegerListOperations {
     public static int findMax(IntNode head) {
         // TODO: 리스트에서 최대값 찾기
         // 힌트: 빈 리스트 처리 주의
+        if (head == null) {
+            throw new IllegalStateException("리스트가 비어 있습니다.");
+        }
 
-        return 0; // 임시 반환값
+        int maxVal = head.value;
+        IntNode current = head.next;
+        while (current != null) {
+            if (current.value > maxVal) {
+                maxVal = current.value;
+            }
+            current = current.next;
+        }
+        return maxVal;
     }
 
     /**
@@ -35,8 +51,15 @@ public class IntegerListOperations {
      */
     public static int countEvens(IntNode head) {
         // TODO: 짝수인 노드의 개수 카운트
-
-        return 0; // 임시 반환값
+        int count = 0;
+        IntNode current = head;
+        while (current != null) {
+            if (current.value % 2 == 0) {
+                count++;
+            }
+            current = current.next;
+        }
+        return count;
     }
 
     public static void main(String[] args) {
@@ -48,10 +71,20 @@ public class IntegerListOperations {
         head.next.next.next.next = new IntNode(4);
         head.next.next.next.next.next = new IntNode(6);
 
-        // 실행 결과:
-        // 리스트: 3 → 7 → 2 → 9 → 4 → 6
-        // 합계: 31
-        // 최대값: 9
-        // 짝수 개수: 3
+        // 리스트 출력
+        System.out.print("리스트: ");
+        IntNode current = head;
+        while (current != null) {
+            System.out.print(current.value);
+            if (current.next != null) {
+                System.out.print(" → ");
+            }
+            current = current.next;
+        }
+        System.out.println();
+
+        System.out.println("합계: " + sum(head));
+        System.out.println("최대값: " + findMax(head));
+        System.out.println("짝수 개수: " + countEvens(head));
     }
 }

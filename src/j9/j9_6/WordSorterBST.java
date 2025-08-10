@@ -29,15 +29,26 @@ public class WordSorterBST {
 
         private TreeNode insertRec(TreeNode node, String word) {
             // TODO 1: 기본 경우 - node가 null이면 새 TreeNode 생성하고 size 증가
+            if (node == null) {
+                size++;
+                return new TreeNode(word);
+            }
 
             // TODO 2: word와 node.word를 비교 (compareTo 사용)
+            int cmp = word.compareTo(node.word);
+
             // TODO 3: word가 더 작으면 왼쪽 서브트리에 삽입
+            if (cmp < 0) {
+                node.left = insertRec(node.left, word);
+            }
             // TODO 4: word가 더 크면 오른쪽 서브트리에 삽입
-            // TODO 5: 같으면 중복이므로 무시
+            else if (cmp > 0) {
+                node.right = insertRec(node.right, word);
+            }
+            // TODO 5: 같으면 중복이므로 무시 (아무 작업 안 함)
 
             // TODO 6: node 반환
-
-            return null; // 임시 반환값
+            return node;
         }
 
         /**
@@ -53,6 +64,11 @@ public class WordSorterBST {
             //    - 왼쪽 서브트리 순회
             //    - 현재 노드의 단어 출력
             //    - 오른쪽 서브트리 순회
+            if (node != null) {
+                printInOrderRec(node.left, out);
+                out.println(node.word);
+                printInOrderRec(node.right, out);
+            }
         }
 
         /**

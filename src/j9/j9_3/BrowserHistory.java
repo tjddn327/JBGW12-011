@@ -31,37 +31,42 @@ public class BrowserHistory {
         this.currentPage = null;
     }
 
-    /**
-     * 새 페이지 방문
-     */
+    /** * 새 페이지 방문     */
     public void visit(String url, String title) {
         // TODO 1: 현재 페이지가 있으면 backStack에 push
+        if (currentPage != null) {
+            backStack.push(currentPage);
+        }
 
         // TODO 2: 새 Page 객체를 생성하여 currentPage로 설정
+        currentPage = new Page(url, title);
 
         // TODO 3: forwardStack을 clear() (새 페이지 방문 시 앞으로 가기 기록 삭제)
+        forwardStack.clear();
 
         System.out.println("방문: " + currentPage);
         displayStatus();
     }
 
-    /**
-     * 뒤로 가기
-     */
+    /** * 뒤로 가기     */
     public void back() {
         // TODO 1: backStack이 비어있는지 확인
+        if (backStack.isEmpty()) {
+            System.out.println("뒤로 갈 페이지가 없습니다.");
+            return;
+        }
 
         // TODO 2: 현재 페이지를 forwardStack에 push
+        forwardStack.push(currentPage);
 
         // TODO 3: backStack에서 pop한 페이지를 currentPage로 설정
+        currentPage = backStack.pop();
 
         System.out.println("뒤로 가기: " + currentPage);
         displayStatus();
     }
 
-    /**
-     * 앞으로 가기
-     */
+    /** * 앞으로 가기     */
     public void forward() {
         if (forwardStack.isEmpty()) {
             System.out.println("앞으로 갈 페이지가 없습니다.");
@@ -75,9 +80,7 @@ public class BrowserHistory {
         displayStatus();
     }
 
-    /**
-     * 현재 상태 표시
-     */
+    /** * 현재 상태 표시     */
     private void displayStatus() {
         System.out.println("현재 페이지: " + (currentPage != null ? currentPage : "없음"));
         System.out.println("뒤로 가기 가능: " + backStack.size() + "개");
@@ -85,9 +88,7 @@ public class BrowserHistory {
         System.out.println();
     }
 
-    /**
-     * 방문 기록 표시
-     */
+    /** * 방문 기록 표시     */
     public void showHistory() {
         System.out.println("\n=== 방문 기록 ===");
 

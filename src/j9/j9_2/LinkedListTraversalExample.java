@@ -18,8 +18,11 @@ public class LinkedListTraversalExample {
         // TODO: while 루프로 리스트 순회하며 각 노드의 위치와 데이터 출력
         // 힌트: runner 변수와 position 변수 사용
         Node runner = head;
+        int position = 0;
         while (runner != null) {
-            System.out.print(runner.data + " ");
+            System.out.println("[" + position + "] " + runner.data);
+            runner = runner.next;
+            position++;
         }
     }
 
@@ -29,6 +32,15 @@ public class LinkedListTraversalExample {
     public static void traverseRecursive(Node head, int position) {
         // TODO: 재귀를 사용하여 리스트 순회
         // 힌트: 기저 사례는 head == null
+
+        // 기저 사례
+        if (head == null) {
+            return;
+        }
+
+        // 재귀 사례
+        System.out.println("[" + position + "] " + head.data);
+        traverseRecursive(head.next, position + 1);
     }
 
     /**
@@ -37,6 +49,15 @@ public class LinkedListTraversalExample {
     public static void printReversed(Node head) {
         // TODO: 재귀를 사용하여 리스트를 역순으로 출력
         // 힌트: 먼저 나머지를 재귀 호출한 후 현재 노드 출력
+
+        // 기저 사례
+        if (head == null) {
+            return;
+        }
+
+        // 재귀 사례
+        printReversed(head.next); // 리스트의 나머지 부분을 먼저 처리
+        System.out.print(head.data + " "); // 그 다음 현재 노드를 출력
     }
 
     public static void main(String[] args) {
@@ -46,20 +67,14 @@ public class LinkedListTraversalExample {
         head.next.next = new Node("C");
         head.next.next.next = new Node("D");
 
-        // 실행 결과:
-        // === While 루프 순회 ===
-        // [0] A
-        // [1] B
-        // [2] C
-        // [3] D
-        //
-        // === 재귀 순회 ===
-        // [0] A
-        // [1] B
-        // [2] C
-        // [3] D
-        //
-        // === 역순 출력 ===
-        // D C B A
+        System.out.println("=== While 루프 순회 ===");
+        traverseWithWhile(head);
+
+        System.out.println("\n=== 재귀 순회 ===");
+        traverseRecursive(head, 0);
+
+        System.out.println("\n=== 역순 출력 ===");
+        printReversed(head);
+        System.out.println();
     }
 }

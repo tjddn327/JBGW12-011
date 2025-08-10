@@ -1,5 +1,7 @@
 package j9.j9_3;
 
+import java.util.NoSuchElementException;
+
 public class LinkedQueue<T> {
 
     private static class Node<T> {
@@ -22,9 +24,7 @@ public class LinkedQueue<T> {
         this.size = 0;
     }
 
-    /**
-     * 큐의 뒤쪽에 요소 추가
-     */
+    /** * 큐의 뒤쪽에 요소 추가     */
     public void enqueue(T item) {
         Node<T> newNode = new Node<>(item);
 
@@ -40,12 +40,10 @@ public class LinkedQueue<T> {
         size++;
     }
 
-    /**
-     * 큐의 앞쪽에서 요소 제거 및 반환
-     */
+    /** * 큐의 앞쪽에서 요소 제거 및 반환     */
     public T dequeue() {
         if (isEmpty()) {
-            throw new IllegalStateException("큐가 비어있습니다");
+            throw new NoSuchElementException("큐가 비어있습니다");
         }
 
         T data = front.data;
@@ -60,41 +58,31 @@ public class LinkedQueue<T> {
         return data;
     }
 
-    /**
-     * 큐의 앞쪽 요소 확인
-     */
+    /** * 큐의 앞쪽 요소 확인     */
     public T peek() {
         if (isEmpty()) {
-            throw new IllegalStateException("큐가 비어있습니다");
+            throw new NoSuchElementException("큐가 비어있습니다");
         }
         return front.data;
     }
 
-    /**
-     * 큐가 비어있는지 확인
-     */
+    /** * 큐가 비어있는지 확인     */
     public boolean isEmpty() {
         return front == null;
     }
 
-    /**
-     * 큐의 크기 반환
-     */
+    /** * 큐의 크기 반환     */
     public int size() {
         return size;
     }
 
-    /**
-     * 큐의 모든 요소 제거
-     */
+    /** * 큐의 모든 요소 제거     */
     public void clear() {
         front = rear = null;
         size = 0;
     }
 
-    /**
-     * 큐에 특정 요소가 있는지 확인
-     */
+    /** * 큐에 특정 요소가 있는지 확인     */
     public boolean contains(T item) {
         Node<T> current = front;
 

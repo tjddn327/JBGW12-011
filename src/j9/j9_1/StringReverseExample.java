@@ -30,12 +30,17 @@ public class StringReverseExample {
 
     private static boolean isPalindromeHelper(String str, int left, int right) {
         // TODO 1: 기저 사례 - 포인터가 만나거나 교차
+        if (left >= right) {
+            return true;
+        }
 
         // TODO 2: 양 끝 문자가 다르면 false
+        if (str.charAt(left) != str.charAt(right)) {
+            return false;
+        }
 
         // TODO 3: 재귀 호출 - 한 칸씩 안쪽으로
-
-        return false; // 임시 반환값
+        return isPalindromeHelper(str, left + 1, right - 1);
     }
 
     public static void main(String[] args) {
@@ -58,5 +63,9 @@ public class StringReverseExample {
         // "A man a plan a canal Panama" → 회문
         // "race a car" → 회문 아님
         // "hello" → 회문 아님
+        String[] palindromeTests = {"racecar", "A man a plan a canal Panama", "race a car", "hello"};
+        for (String test : palindromeTests) {
+            System.out.println("\"" + test + "\" → " + (isPalindrome(test) ? "회문" : "회문 아님"));
+        }
     }
 }

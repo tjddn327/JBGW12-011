@@ -33,12 +33,13 @@ public class FactorialExample {
         System.out.println(indent + "factorial(" + n + ") 계산 시작");
 
         // TODO: 기저 사례와 재귀 사례를 구현하면서 각 단계를 출력
-        if(n == 1){
-            indent = "기저 사례";
+        if(n <= 1){
+            System.out.println(indent + "  기저 사례: factorial(" + n + ") = 1");
             return 1;
         }
-
-        return 0; // 임시 반환값
+        long result = n * factorialWithTrace(n - 1, indent + "  ");
+        System.out.println(indent + "factorial(" + n + ") = " + n + " × " + (result / n) + " = " + result);
+        return result;
     }
 
     public static void main(String[] args) {
@@ -67,6 +68,7 @@ public class FactorialExample {
         //     factorial(2) = 2 × 1 = 2
         //   factorial(3) = 3 × 2 = 6
         // factorial(4) = 4 × 6 = 24
+        factorialWithTrace(4, "");
 
     }
 }

@@ -25,7 +25,7 @@ public class BasicParser {
         return ch;
     }
 
-    void skipWhitespace() {
+    private void skipWhitespace() {
         while (position < input.length() &&
                 Character.isWhitespace(input.charAt(position))) {
             position++;
@@ -41,7 +41,8 @@ public class BasicParser {
     private void expect(char expected) throws ParseError {
         skipWhitespace();
         if (peek() != expected) {
-            throw new ParseError("'" + expected + "'가 필요하지만 '" + peek() + "'를 발견했습니다.");
+            throw new ParseError("'" + expected + "'가 필요하지만 '" +
+                    peek() + "'를 발견했습니다.");
         }
         next();
     }

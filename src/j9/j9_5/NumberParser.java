@@ -2,46 +2,82 @@
 //
 //public class NumberParser extends BasicParser {
 //
+//
 //    // <integer> ::= <digit> | <digit> <integer>
 //    public int parseInteger() throws ParseError {
 //        skipWhitespace();
 //
 //        // TODO 1: 현재 문자가 숫자가 아니면 ParseError 던지기
+//        if (!Character.isDigit(peek())) {
+//            throw new ParseError("숫자가 필요하지만 '" + peek() + "'를 발견했습니다.");
+//        }
 //
 //        // TODO 2: 숫자를 읽어서 정수로 변환
 //        // 힌트: 반복문을 사용하여 연속된 숫자를 읽고,
 //        //      result = result * 10 + (next() - '0') 방식으로 값 축적
-//
-//        return 0; // 임시 반환값
+//        int result = 0;
+//        while (Character.isDigit(peek())) {
+//            result = result * 10 + (next() - '0');
+//        }
+//        return result;
 //    }
 //
 //    // <signed-integer> ::= [ "+" | "-" ] <integer>
 //    public int parseSignedInteger() throws ParseError {
 //        skipWhitespace();
+//        boolean isNegative = false;
 //
 //        // TODO 1: 부호 처리
 //        // - '+' 또는 '-'가 있는지 확인
 //        // - '-'인 경우 negative 플래그 설정
+//        if (peek() == '+') {
+//            next();
+//        } else if (peek() == '-') {
+//            isNegative = true;
+//            next();
+//        }
 //
 //        // TODO 2: parseInteger()를 호출하여 숫자 파싱
+//        int value = parseInteger();
 //
 //        // TODO 3: negative이면 음수로 변환하여 반환
-//
-//        return 0; // 임시 반환값
+//        return isNegative ? -value : value;
 //    }
 //
 //    // <real-number> ::= <integer> [ "." <integer> ]
 //    public double parseRealNumber() throws ParseError {
-//        // TODO 1: parseInteger()로 정수 부분 파싱
+//        skipWhitespace();
+//
+//        // 정수 부분을 문자열로 먼저 읽습니다. 부호까지 처리하기 위함입니다.
+//        StringBuilder sb = new StringBuilder();
+//        if (peek() == '+' || peek() == '-') {
+//            sb.append(next());
+//        }
+//
+//        // TODO 1: parseInteger()로 정수 부분 파싱 (개선된 방식)
+//        if (!Character.isDigit(peek())) {
+//            throw new ParseError("숫자가 필요합니다.");
+//        }
+//        while(Character.isDigit(peek())) {
+//            sb.append(next());
+//        }
 //
 //        // TODO 2: 소수점이 있는지 확인
-//        // TODO 3: 소수점이 있으면:
-//        //   - '.' 소비
-//        //   - 다음 문자가 숫자인지 확인 (아니면 예외)
-//        //   - 소수 부분 파싱 (반복문으로 숫자 읽기)
-//        //   - 힌트: fraction += (next() - '0') / divisor; divisor *= 10;
+//        if (peek() == '.') {
+//            sb.append(next()); // '.' 소비
 //
-//        return 0.0; // 임시 반현값
+//            // TODO 3: 소수점이 있으면:
+//            //   - 다음 문자가 숫자인지 확인 (아니면 예외)
+//            if (!Character.isDigit(peek())) {
+//                throw new ParseError("소수점 뒤에 숫자가 필요합니다.");
+//            }
+//            //   - 소수 부분 파싱 (반복문으로 숫자 읽기)
+//            while (Character.isDigit(peek())) {
+//                sb.append(next());
+//            }
+//        }
+//
+//        return Double.parseDouble(sb.toString());
 //    }
 //
 //    // 테스트

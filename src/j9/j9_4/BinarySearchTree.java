@@ -19,14 +19,22 @@ public class BinarySearchTree {
 
     private TreeNode insertRec(TreeNode node, int value) {
         // TODO 1: 기저 사례 - node가 null이면 새 TreeNode 생성하여 반환
+        if (node == null) {
+            return new TreeNode(value);
+        }
 
         // TODO 2: value가 node.data보다 작으면 왼쪽 서브트리에 삽입
+        if (value < node.data) {
+            node.left = insertRec(node.left, value);
+        }
         // TODO 3: value가 node.data보다 크면 오른쪽 서브트리에 삽입
+        else if (value > node.data) {
+            node.right = insertRec(node.right, value);
+        }
         // TODO 4: 같으면 중복이므로 무시
 
         // TODO 5: 현재 노드 반환
-
-        return null; // 임시 반환값
+        return node;
     }
 
     // 삽입 (반복적)
@@ -64,12 +72,22 @@ public class BinarySearchTree {
 
     private boolean containsRec(TreeNode node, int value) {
         // TODO 1: 기저 사례 - node가 null이면 false 반환
+        if (node == null) {
+            return false;
+        }
         // TODO 2: value와 node.data가 같으면 true 반환
+        if (value == node.data) {
+            return true;
+        }
 
         // TODO 3: value가 node.data보다 작으면 왼쪽 서브트리에서 검색
+        if (value < node.data) {
+            return containsRec(node.left, value);
+        }
         // TODO 4: 그렇지 않으면 오른쪽 서브트리에서 검색
-
-        return false; // 임시 반환값
+        else {
+            return containsRec(node.right, value);
+        }
     }
 
     // 최소값 찾기
@@ -81,8 +99,10 @@ public class BinarySearchTree {
     private TreeNode findMinNode(TreeNode node) {
         // TODO: 가장 왼쪽 노드를 찾을 때까지 왼쪽으로 이동
         // 힌트: while 루프를 사용하여 node.left가 null이 아닌 동안 계속 이동
-
-        return null; // 임시 반환값
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
     }
 
     // 최대값 찾기

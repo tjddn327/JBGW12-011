@@ -13,6 +13,11 @@ public class BasicNodeExample {
             this.data = data;
             this.next = null;
         }
+
+        @Override
+        public String toString() {
+            return "Node[" + data + "]";
+        }
     }
 
     /**
@@ -21,10 +26,15 @@ public class BasicNodeExample {
     public static void printChain(Node head) {
         // TODO: 연결된 노드들을 순서대로 출력
         // 힌트: current가 null이 될 때까지 반복
-        while (head != null) {
-            System.out.print(head.data + " ");
-            head = head.next;
+        Node current = head;
+        while (current != null) {
+            System.out.print(current);
+            if (current.next != null) {
+                System.out.print(" → ");
+            }
+            current = current.next; // 다음 노드로 이동
         }
+        System.out.println();
     }
 
     /**
@@ -32,8 +42,13 @@ public class BasicNodeExample {
      */
     public static int getChainLength(Node head) {
         // TODO: 연결된 노드의 개수 반환
-
-        return 0; // 임시 반환값
+        int length = 0;
+        Node current = head;
+        while (current != null) {
+            length++;
+            current = current.next;
+        }
+        return length;
     }
 
     public static void main(String[] args) {
@@ -46,7 +61,9 @@ public class BasicNodeExample {
         second.next = third;
 
         // 실행 결과:
-        // 노드 체인: Node[첫번째] → Node[두번째] → Node[세번째]
-        // 체인 길이: 3
+        System.out.print("노드 체인: ");
+        printChain(first);
+
+        System.out.println("체인 길이: " + getChainLength(first));
     }
 }

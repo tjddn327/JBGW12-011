@@ -1,6 +1,21 @@
 //package j9.j9_5;
 //
+//import java.util.*;
+//
 //public class MiniLanguageParser extends BasicParser {
+//    // BasicParser의 필드와 메서드가 필요합니다.
+//    private String input;
+//    private int position;
+//
+//    // BasicParser의 클래스와 메서드
+//    static class ParseError extends Exception { public ParseError(String message) { super(message); } }
+//    private char peek() { return position < input.length() ? input.charAt(position) : '\0'; }
+//    private char next() { char ch = peek(); if (position < input.length()) position++; return ch; }
+//    private void skipWhitespace() { while (position < input.length() && (Character.isWhitespace(input.charAt(position)) || input.charAt(position) == '\n' || input.charAt(position) == '\r')) { position++; } }
+//    private boolean isAtEnd() { skipWhitespace(); return position >= input.length(); }
+//    private void expect(char expected) throws ParseError { skipWhitespace(); if (peek() != expected) { throw new ParseError("'" + expected + "'가 필요하지만 '" + peek() + "'를 발견했습니다."); } next(); }
+//    private boolean match(String str) { skipWhitespace(); int savedPos = position; for (char ch : str.toCharArray()) { if (next() != ch) { position = savedPos; return false; } } return true; }
+//    private String parseIdentifier() { skipWhitespace(); StringBuilder sb = new StringBuilder(); while (Character.isLetterOrDigit(peek())) { sb.append(next()); } return sb.toString(); }
 //
 //    // Statement 추상 클래스
 //    abstract static class Statement {
@@ -17,10 +32,22 @@
 //
 //        public double getVariable(String name) {
 //            if (!variables.containsKey(name)) {
-//                throw new RuntimeException("정의되지 않은 변수: " + name);
+//                // 기본값 0으로 초기화
+//                // throw new RuntimeException("정의되지 않은 변수: " + name);
+//                this.variables.put(name, 0.0);
 //            }
 //            return variables.get(name);
 //        }
+//    }
+//
+//    // ExpressionParser 로직 통합
+//    private ExpressionTreeParser exprParser = new ExpressionTreeParser();
+//    private ExprNode parseExpression() throws ParseError {
+//        this.exprParser.input = this.input;
+//        this.exprParser.position = this.position;
+//        ExprNode result = this.exprParser.parseExpression();
+//        this.position = this.exprParser.position;
+//        return result;
 //    }
 //
 //    // 할당문
@@ -50,6 +77,8 @@
 //
 //        @Override
 //        public void execute(Environment env) {
+//            // Expression의 변수 맵을 Environment와 연결
+//            connectVariables(expression, env.variables);
 //            double value = expression.evaluate();
 //            System.out.println(value);
 //        }
@@ -69,6 +98,7 @@
 //
 //        @Override
 //        public void execute(Environment env) {
+//            connectVariables(condition, env.variables);
 //            if (condition.evaluate() != 0) {
 //                thenStmt.execute(env);
 //            } else if (elseStmt != null) {
@@ -90,6 +120,22 @@
 //            for (Statement stmt : statements) {
 //                stmt.execute(env);
 //            }
+//        }
+//    }
+//
+//    // Helper to connect variable maps
+//    private static void connectVariables(ExprNode node, Map<String, Double> vars) {
+//        if (node instanceof VariableExpressionParser.VariableNode) {
+//            try {
+//                var field = VariableExpressionParser.VariableNode.class.getDeclaredField("variables");
+//                field.setAccessible(true);
+//                field.set(node, vars);
+//            } catch (Exception e) {}
+//        } else if (node instanceof BinaryOpNode) {
+//            connectVariables(ExpressionTreeParser.getLeft((BinaryOpNode)node), vars);
+//            connectVariables(ExpressionTreeParser.getRight((BinaryOpNode)node), vars);
+//        } else if (node instanceof UnaryMinusNode) {
+//            connectVariables(ExpressionTreeParser.getOperand((UnaryMinusNode)node), vars);
 //        }
 //    }
 //
@@ -124,14 +170,25 @@
 //    private Statement parseAssignment() throws ParseError {
 //        String var = parseIdentifier();
 //        expect('=');
-//        ExprNode expr = parseExpression();
+//        // Expression 파서를 사용하기 위해 약간의 조정
+//        VariableExpressionParser tempParser = new VariableExpressionParser();
+//        tempParser.input = this.input;
+//        tempParser.position = this.position;
+//        ExprNode expr = tempParser.parseExpression();
+//        this.position = tempParser.position;
+//
 //        expect(';');
 //        return new AssignmentStatement(var, expr);
 //    }
 //
 //    // <print> ::= "print" <expression> ";"
 //    private Statement parsePrintStatement() throws ParseError {
-//        ExprNode expr = parseExpression();
+//        VariableExpressionParser tempParser = new VariableExpressionParser();
+//        tempParser.input = this.input;
+//        tempParser.position = this.position;
+//        ExprNode expr = tempParser.parseExpression();
+//        this.position = tempParser.position;
+//
 //        expect(';');
 //        return new PrintStatement(expr);
 //    }
@@ -139,7 +196,12 @@
 //    // <if-statement> ::= "if" "(" <expression> ")" <statement> [ "else" <statement> ]
 //    private Statement parseIfStatement() throws ParseError {
 //        expect('(');
-//        ExprNode condition = parseExpression();
+//        VariableExpressionParser tempParser = new VariableExpressionParser();
+//        tempParser.input = this.input;
+//        tempParser.position = this.position;
+//        ExprNode condition = tempParser.parseExpression();
+//        this.position = tempParser.position;
+//
 //        expect(')');
 //        Statement thenStmt = parseStatement();
 //        Statement elseStmt = null;
@@ -169,18 +231,7 @@
 //    public static void main(String[] args) {
 //        MiniLanguageParser parser = new MiniLanguageParser();
 //
-//        String program = """
-//            x = 10;
-//            y = 20;
-//            sum = x + y;
-//            print sum;
-//
-//            if (x < y) {
-//                print 1;
-//            } else {
-//                print 0;
-//            }
-//            """;
+//        String program = "x = 10; y = 20; sum = x + y; print sum; if (x < y) { print 1; } else { print 0; }";
 //
 //        try {
 //            parser.input = program;

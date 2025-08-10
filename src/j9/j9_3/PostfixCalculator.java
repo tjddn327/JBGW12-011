@@ -2,31 +2,50 @@ package j9.j9_3;
 
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.EmptyStackException;
 
 public class PostfixCalculator {
 
-    /**
-     * 후위 표기법 표현식을 계산
-     */
+    /** * 후위 표기법 표현식을 계산     */
     public static double evaluate(String expression) {
         GenericLinkedStack<Double> stack = new GenericLinkedStack<>();
         StringTokenizer tokenizer = new StringTokenizer(expression);
 
         // TODO 1: tokenizer로 각 토큰을 순회
-        // TODO 2: 토큰이 숫자면 스택에 push
-        // TODO 3: 토큰이 연산자면:
-        //   - 스택에서 두 개의 숫자를 pop (b를 먼저, 그 다음 a)
-        //   - applyOperator(a, b, token)으로 계산
-        //   - 결과를 스택에 push
-        // TODO 4: 모든 토큰 처리 후 스택에 하나의 값만 남았는지 확인
-        // TODO 5: 최종 결과 반환
+        while (tokenizer.hasMoreTokens()) {
+            String token = tokenizer.nextToken();
 
-        return 0.0; // 임시 반환값
+            // TODO 2: 토큰이 숫자면 스택에 push
+            if (isNumber(token)) {
+                stack.push(Double.parseDouble(token));
+            }
+            // TODO 3: 토큰이 연산자면:
+            else if (isOperator(token)) {
+                if (stack.size() < 2) {
+                    throw new IllegalArgumentException("피연산자가 부족합니다.");
+                }
+                //   - 스택에서 두 개의 숫자를 pop (b를 먼저, 그 다음 a)
+                double b = stack.pop();
+                double a = stack.pop();
+                //   - applyOperator(a, b, token)으로 계산
+                double result = applyOperator(a, b, token);
+                //   - 결과를 스택에 push
+                stack.push(result);
+            } else {
+                throw new IllegalArgumentException("알 수 없는 토큰: " + token);
+            }
+        }
+
+        // TODO 4: 모든 토큰 처리 후 스택에 하나의 값만 남았는지 확인
+        if (stack.size() != 1) {
+            throw new IllegalArgumentException("표현식이 잘못되었습니다.");
+        }
+
+        // TODO 5: 최종 결과 반환
+        return stack.pop();
     }
 
-    /**
-     * 중위 표기법을 후위 표기법으로 변환
-     */
+    /** * 중위 표기법을 후위 표기법으로 변환     */
     public static String infixToPostfix(String infix) {
         StringBuilder postfix = new StringBuilder();
         GenericLinkedStack<Character> operatorStack = new GenericLinkedStack<>();
@@ -65,29 +84,27 @@ public class PostfixCalculator {
         return postfix.toString().trim();
     }
 
-    /**
-     * 연산자 우선순위 반환
-     */
+    /** * 연산자 우선순위 반환     */
     private static int precedence(char operator) {
         // TODO: 연산자에 따른 우선순위 반환
         // +, - : 1
         // *, / : 2
         // ^ : 3
-
-//        return 0; // 임시 반환값
-//        return 1;
-//        case '*':
-//        case '/':
-//        return 2;
-//        case '^':
-//        return 3;
-//        default:
-        return 0;
+        switch (operator) {
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+                return 2;
+            case '^':
+                return 3;
+            default:
+                return 0;
+        }
     }
 
-    /**
-     * 문자열이 숫자인지 확인
-     */
+    /** * 문자열이 숫자인지 확인     */
     private static boolean isNumber(String token) {
         try {
             Double.parseDouble(token);
@@ -97,17 +114,13 @@ public class PostfixCalculator {
         }
     }
 
-    /**
-     * 문자열이 연산자인지 확인
-     */
+    /** * 문자열이 연산자인지 확인     */
     private static boolean isOperator(String token) {
         // TODO: token이 +, -, *, /, ^ 중 하나인지 확인
-        return false; // 임시 반환값
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") || token.equals("^");
     }
 
-    /**
-     * 연산자 적용
-     */
+    /** * 연산자 적용     */
     private static double applyOperator(double a, double b, String operator) {
         // TODO: operator에 따라 적절한 연산 수행
         // +: a + b
@@ -115,13 +128,19 @@ public class PostfixCalculator {
         // *: a * b
         // /: a / b (b가 0이면 ArithmeticException)
         // ^: Math.pow(a, b)
-
-        return 0.0; // 임시 반환값
+        switch (operator) {
+            case "+": return a + b;
+            case "-": return a - b;
+            case "*": return a * b;
+            case "/":
+                if (b == 0) throw new ArithmeticException("0으로 나눌 수 없습니다.");
+                return a / b;
+            case "^": return Math.pow(a, b);
+            default: throw new IllegalArgumentException("알 수 없는 연산자: " + operator);
+        }
     }
 
-    /**
-     * 계산 과정을 시각화
-     */
+    /** * 계산 과정을 시각화     */
     public static void visualizeCalculation(String expression) {
         System.out.println("\n=== 후위 표기법 계산 시각화 ===");
         System.out.println("표현식: " + expression);
